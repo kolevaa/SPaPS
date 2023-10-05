@@ -17,7 +17,7 @@ namespace SPaPS.Models
         public int CreatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public int? UpdatedBy { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual ICollection<Reference> References { get; set; }
     }

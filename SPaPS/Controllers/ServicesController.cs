@@ -10,89 +10,87 @@ using SPaPS.Models;
 
 namespace SPaPS.Controllers
 {
-    public class ReferenceTypesController : Controller
+    public class ServicesController : Controller
     {
         private readonly SPaPSContext _context;
 
-        public ReferenceTypesController(SPaPSContext context)
+        public ServicesController(SPaPSContext context)
         {
             _context = context;
         }
 
-        // GET: ReferenceTypes
+        // GET: Services
         public async Task<IActionResult> Index()
         {
-              return _context.ReferenceTypes != null ?
-                          View(await _context.ReferenceTypes.ToListAsync()) :
-                          Problem("Entity set 'SPaPSContext.ReferenceTypes'  is null.");
+              return _context.Services != null ? 
+                          View(await _context.Services.ToListAsync()) :
+                          Problem("Entity set 'SPaPSContext.Services'  is null.");
         }
 
-        // GET: ReferenceTypes/Details/5
+        // GET: Services/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null || _context.ReferenceTypes == null)
+            if (id == null || _context.Services == null)
             {
                 return NotFound();
             }
 
-            var referenceType = await _context.ReferenceTypes
-                .FirstOrDefaultAsync(m => m.ReferenceTypeId == id);
-            if (referenceType == null)
+            var service = await _context.Services
+                .FirstOrDefaultAsync(m => m.ServiceId == id);
+            if (service == null)
             {
                 return NotFound();
             }
 
-            return View(referenceType);
+            return View(service);
         }
 
-        // GET: ReferenceTypes/Create
+        // GET: Services/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ReferenceTypes/Create
+        // POST: Services/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ReferenceType referenceType)
+        public async Task<IActionResult> Create([Bind("ServiceId,Description,CreatedOn,CreatedBy,UpdatedOn,UpdatedBy,IsActive")] Service service)
         {
             if (ModelState.IsValid)
             {
-                referenceType.CreatedBy = 1;
-                referenceType.CreatedOn = DateTime.Now;
-                _context.Add(referenceType);
+                _context.Add(service);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(referenceType);
+            return View(service);
         }
 
-        // GET: ReferenceTypes/Edit/5
+        // GET: Services/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null || _context.ReferenceTypes == null)
+            if (id == null || _context.Services == null)
             {
                 return NotFound();
             }
 
-            var referenceType = await _context.ReferenceTypes.FindAsync(id);
-            if (referenceType == null)
+            var service = await _context.Services.FindAsync(id);
+            if (service == null)
             {
                 return NotFound();
             }
-            return View(referenceType);
+            return View(service);
         }
 
-        // POST: ReferenceTypes/Edit/5
+        // POST: Services/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, ReferenceType referenceType)
+        public async Task<IActionResult> Edit(long id, [Bind("ServiceId,Description,CreatedOn,CreatedBy,UpdatedOn,UpdatedBy,IsActive")] Service service)
         {
-            if (id != referenceType.ReferenceTypeId)
+            if (id != service.ServiceId)
             {
                 return NotFound();
             }
@@ -101,14 +99,12 @@ namespace SPaPS.Controllers
             {
                 try
                 {
-                    referenceType.UpdatedBy = 1;
-                    referenceType.UpdatedOn = DateTime.Now;
-                    _context.Update(referenceType);
+                    _context.Update(service);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReferenceTypeExists(referenceType.ReferenceTypeId))
+                    if (!ServiceExists(service.ServiceId))
                     {
                         return NotFound();
                     }
@@ -119,49 +115,49 @@ namespace SPaPS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(referenceType);
+            return View(service);
         }
 
-        // GET: ReferenceTypes/Delete/5
+        // GET: Services/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null || _context.ReferenceTypes == null)
+            if (id == null || _context.Services == null)
             {
                 return NotFound();
             }
 
-            var referenceType = await _context.ReferenceTypes
-                .FirstOrDefaultAsync(m => m.ReferenceTypeId == id);
-            if (referenceType == null)
+            var service = await _context.Services
+                .FirstOrDefaultAsync(m => m.ServiceId == id);
+            if (service == null)
             {
                 return NotFound();
             }
 
-            return View(referenceType);
+            return View(service);
         }
 
-        // POST: ReferenceTypes/Delete/5
+        // POST: Services/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            if (_context.ReferenceTypes == null)
+            if (_context.Services == null)
             {
-                return Problem("Entity set 'SPaPSContext.ReferenceTypes'  is null.");
+                return Problem("Entity set 'SPaPSContext.Services'  is null.");
             }
-            var referenceType = await _context.ReferenceTypes.FindAsync(id);
-            if (referenceType != null)
+            var service = await _context.Services.FindAsync(id);
+            if (service != null)
             {
-                _context.ReferenceTypes.Remove(referenceType);
+                _context.Services.Remove(service);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ReferenceTypeExists(long id)
+        private bool ServiceExists(long id)
         {
-          return (_context.ReferenceTypes?.Any(e => e.ReferenceTypeId == id)).GetValueOrDefault();
+          return (_context.Services?.Any(e => e.ServiceId == id)).GetValueOrDefault();
         }
     }
 }

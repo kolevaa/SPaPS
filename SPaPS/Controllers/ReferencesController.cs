@@ -48,7 +48,7 @@ namespace SPaPS.Controllers
         // GET: References/Create
         public IActionResult Create()
         {
-            ViewData["ReferenceTypeId"] = new SelectList(_context.ReferenceTypes, "ReferenceTypeId", "ReferenceTypeId");
+            ViewBag.ReferenceTypeId = new SelectList(_context.ReferenceTypes, "ReferenceTypeId", "Description");
             return View();
         }
 
@@ -57,15 +57,17 @@ namespace SPaPS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReferenceId,ReferenceTypeId,Description,Code,CreatedOn,CreatedBy,UpdatedOn,UpdatedBy,IsActive")] Reference reference)
+        public async Task<IActionResult> Create(Reference reference)
         {
             if (ModelState.IsValid)
             {
+                reference.CreatedBy = 1;
+                reference.CreatedOn = DateTime.Now;
                 _context.Add(reference);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReferenceTypeId"] = new SelectList(_context.ReferenceTypes, "ReferenceTypeId", "ReferenceTypeId", reference.ReferenceTypeId);
+            ViewBag.ReferenceTypeId = new SelectList(_context.ReferenceTypes, "ReferenceTypeId", "Description", reference.ReferenceTypeId);
             return View(reference);
         }
 
@@ -82,7 +84,7 @@ namespace SPaPS.Controllers
             {
                 return NotFound();
             }
-            ViewData["ReferenceTypeId"] = new SelectList(_context.ReferenceTypes, "ReferenceTypeId", "ReferenceTypeId", reference.ReferenceTypeId);
+            ViewBag.ReferenceTypeId = new SelectList(_context.ReferenceTypes, "ReferenceTypeId", "Description", reference.ReferenceTypeId);
             return View(reference);
         }
 
@@ -91,7 +93,7 @@ namespace SPaPS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ReferenceId,ReferenceTypeId,Description,Code,CreatedOn,CreatedBy,UpdatedOn,UpdatedBy,IsActive")] Reference reference)
+        public async Task<IActionResult> Edit(long id, Reference reference)
         {
             if (id != reference.ReferenceId)
             {
@@ -102,6 +104,8 @@ namespace SPaPS.Controllers
             {
                 try
                 {
+                    reference.UpdatedBy = 1;
+                    reference.UpdatedOn = DateTime.Now;
                     _context.Update(reference);
                     await _context.SaveChangesAsync();
                 }
@@ -118,7 +122,7 @@ namespace SPaPS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReferenceTypeId"] = new SelectList(_context.ReferenceTypes, "ReferenceTypeId", "ReferenceTypeId", reference.ReferenceTypeId);
+            ViewBag.ReferenceTypeId = new SelectList(_context.ReferenceTypes, "ReferenceTypeId", "Description", reference.ReferenceTypeId);
             return View(reference);
         }
 
