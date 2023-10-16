@@ -1,8 +1,10 @@
 using DataAccess.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Postal.AspNetCore;
 using SPaPS.Data;
+using SPaPS.Enums;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +33,19 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
+
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(nameof(AuthPolicy.AdminPolicy),
+        policy => policy.RequireRole(Roles.Admin.ToString(), Roles.Client.ToString()));
+    options.AddPolicy(nameof(AuthPolicy.CompanyPolicy),
+       policy => policy.RequireRole(Roles.Company.ToString()));
+    options.AddPolicy(nameof(AuthPolicy.ClientPolicy),
+       policy => policy.RequireRole(Roles.Client.ToString()));
+  
+});
+
 
 builder.Services.AddMvc();
 

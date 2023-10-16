@@ -56,10 +56,11 @@ namespace SPaPS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClientId,UserId,ClientTypeId,Name,Address,IdNo,CityId,CountryId,CreatedOn,UpdatedOn,NoOfEmployees,DateEstablished")] Client client)
+        public async Task<IActionResult> Create( Client client)
         {
             if (ModelState.IsValid)
             {
+                client.CreatedOn = DateTime.UtcNow;
                 _context.Add(client);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -88,7 +89,7 @@ namespace SPaPS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ClientId,UserId,ClientTypeId,Name,Address,IdNo,CityId,CountryId,CreatedOn,UpdatedOn,NoOfEmployees,DateEstablished")] Client client)
+        public async Task<IActionResult> Edit(long id, Client client)
         {
             if (id != client.ClientId)
             {
@@ -98,7 +99,8 @@ namespace SPaPS.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                {   client.UpdatedOn = DateTime.UtcNow;
+                    
                     _context.Update(client);
                     await _context.SaveChangesAsync();
                 }

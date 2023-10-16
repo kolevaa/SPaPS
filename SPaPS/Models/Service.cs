@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SPaPS.Models
 {
@@ -10,16 +11,25 @@ namespace SPaPS.Models
             Requests = new HashSet<Request>();
             ServiceActivities = new HashSet<ServiceActivity>();
         }
-
+        
         public long ServiceId { get; set; }
+        
         public string? Description { get; set; }
+       
         public DateTime CreatedOn { get; set; }
+        
         public int CreatedBy { get; set; }
+       
         public DateTime? UpdatedOn { get; set; }
+       
         public int? UpdatedBy { get; set; }
+       
         public bool? IsActive { get; set; }
 
         public virtual ICollection<Request> Requests { get; set; }
         public virtual ICollection<ServiceActivity> ServiceActivities { get; set; }
+
+        public virtual ICollection<ClientService> ClientServices { get; set; }
+
     }
 }

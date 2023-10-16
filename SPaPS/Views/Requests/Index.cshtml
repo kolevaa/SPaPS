@@ -6,10 +6,13 @@
 }
 
 <h1>Index</h1>
+@if (User.IsInRole(SPaPS.Enums.Roles.Client.ToString()))
+{
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -18,6 +21,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BuildingTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivityId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BuildingSize)
@@ -41,24 +50,16 @@
                 @Html.DisplayNameFor(model => model.Note)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedBy)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.IsActive)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Service)
             </th>
-            <th></th>
+            
+            @if (User.IsInRole(SPaPS.Enums.Roles.Client.ToString()))
+            {
+                <th></th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -69,6 +70,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BuildingTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activity.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BuildingSize)
@@ -92,28 +99,21 @@
                 @Html.DisplayFor(modelItem => item.Note)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedBy)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Service.ServiceId)
+                @Html.DisplayFor(modelItem => item.Service.Description)
             </td>
-            <td>
+                @if (User.IsInRole(SPaPS.Enums.Roles.Client.ToString()))
+                {
+                    
+                
+                <td>
                 <a asp-action="Edit" asp-route-id="@item.RequestId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.RequestId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.RequestId">Delete</a>
             </td>
+                }
         </tr>
 }
     </tbody>

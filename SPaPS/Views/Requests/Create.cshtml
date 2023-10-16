@@ -24,9 +24,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="BuildingTypeId" class="control-label"></label>
-                <input asp-for="BuildingTypeId" class="form-control" />
-                <span asp-validation-for="BuildingTypeId" class="text-danger"></span>
+                <select asp-for="BuildingTypeId" asp-items="@ViewBag.BiuldingTypes" class="form-select">
+                    <option value="">-- Избери --</option>
+                </select>
             </div>
+            <div class="form-group">
+                <label asp-for="ActivityId" class="control-label"></label>
+                <input asp-for="ActivityId" class="form-control" />
+                <span asp-validation-for="ActivityId" class="text-danger"></span>
+            </div>
+           
             <div class="form-group">
                 <label asp-for="BuildingSize" class="control-label"></label>
                 <input asp-for="BuildingSize" class="form-control" />
@@ -59,23 +66,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Note" class="control-label"></label>
-                <input asp-for="Note" class="form-control" />
+                <textarea asp-for="Note" class="form-control" /></textarea>
                 <span asp-validation-for="Note" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedBy" class="control-label"></label>
-                <input asp-for="CreatedBy" class="form-control" />
-                <span asp-validation-for="CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedOn" class="control-label"></label>
-                <input asp-for="UpdatedOn" class="form-control" />
-                <span asp-validation-for="UpdatedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedBy" class="control-label"></label>
-                <input asp-for="UpdatedBy" class="form-control" />
-                <span asp-validation-for="UpdatedBy" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SPaPS.Models
 {
@@ -9,20 +10,37 @@ namespace SPaPS.Models
         {
             ClientActivities = new HashSet<ClientActivity>();
         }
-
+       
         public long ClientId { get; set; }
+       
         public string UserId { get; set; } = null!;
+        
         public int ClientTypeId { get; set; }
+       
         public string Name { get; set; } = null!;
+      
         public string Address { get; set; } = null!;
+       
         public string IdNo { get; set; } = null!;
+        
         public int CityId { get; set; }
+        
         public int? CountryId { get; set; }
+        
         public DateTime CreatedOn { get; set; }
+       
         public DateTime? UpdatedOn { get; set; }
+       
         public int? NoOfEmployees { get; set; }
+       
         public DateTime? DateEstablished { get; set; }
 
         public virtual ICollection<ClientActivity> ClientActivities { get; set; }
+
+        public virtual ICollection<ClientService> ClientServices { get; set; }
+
+        public virtual ICollection<Request> Requests { get; set; }
+
+
     }
 }

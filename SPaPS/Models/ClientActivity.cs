@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SPaPS.Models
 {
     public partial class ClientActivity
     {
         public long ClientActivityId { get; set; }
+        
         public long ClientId { get; set; }
+        
         public long ActivityId { get; set; }
 
         public virtual Activity Activity { get; set; } = null!;
